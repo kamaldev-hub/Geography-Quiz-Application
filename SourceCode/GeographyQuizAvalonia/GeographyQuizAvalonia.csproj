@@ -1,12 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>disable</ImplicitUsings> <!-- Be explicit for clarity in this generated project -->
     <RootNamespace>GeographyQuizAvalonia</RootNamespace>
     <AssemblyName>GeographyQuizAvalonia</AssemblyName>
-    <LangVersion>10.0</LangVersion> <!-- Enable C# 10 features -->
+    <LangVersion>12.0</LangVersion> <!-- Enable C# 12 features -->
     <!-- Avalonia uses platform-specific executables by default -->
   </PropertyGroup>
 

@@ -55,12 +55,15 @@
 
             <TextBlock Grid.Row="0" Text="{Binding CurrentQuestion.QuestionText}" FontSize="18" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="0,10"/>
 
+            <!-- Simplified Image Section -->
             <Image Grid.Row="1" Source="{Binding CurrentQuestion.ImagePath, Converter={x:Static converters:BitmapAssetValueConverter.Instance}}"
                    Stretch="Uniform" MaxHeight="250" Margin="10"
-                   IsVisible="{Binding CurrentQuestion.ImagePath, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
-            <!-- A local:BitmapAssetValueConverter would be needed to convert string path to IImage -->
-            <!-- For now, this binding will likely fail without the converter -->
+                   IsVisible="{Binding CurrentQuestion.ImagePath, Converter={x:Static converters:IsNotNullOrEmptyConverter.Instance}}"/>
+                   <!-- Corrected converter name from previous step's mental model -->
+            <!-- Removed comments that were here -->
 
+            <!-- Simplified ItemsControl Section -->
+            <!-- <TextBlock Grid.Row="2" Text="Answer options will appear here." HorizontalAlignment="Center" VerticalAlignment="Center"/> -->
 
             <ItemsControl Grid.Row="2" ItemsSource="{Binding AnswerOptions}" HorizontalAlignment="Center" Margin="0,10,0,0">
                 <ItemsControl.ItemsPanel>
@@ -77,6 +80,7 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
+
         </Grid>
     </DockPanel>
 </UserControl>
