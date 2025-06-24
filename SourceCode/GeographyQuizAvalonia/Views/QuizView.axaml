@@ -1,0 +1,84 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:GeographyQuizAvalonia.ViewModels"
+             xmlns:converters="using:GeographyQuizAvalonia.Converters"
+             mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="550"
+             x:Class="GeographyQuizAvalonia.Views.QuizView"
+             x:DataType="vm:QuizViewModel">
+
+    <Design.DataContext>
+        <!-- This DataContext is used by the Avalonia XAML Designer primarily -->
+        <!-- Ensure QuizViewModel has a parameterless constructor or its dependencies can be resolved by the designer -->
+        <vm:QuizViewModel />
+    </Design.DataContext>
+
+    <UserControl.Resources>
+      <converters:BitmapAssetValueConverter x:Key="BitmapAssetConverter"/>
+      <converters:IsNotNullOrEmptyConverter x:Key="IsNotNullOrEmptyConverter"/>
+      <!-- A simple state to class converter might be added here later for Feedback Text -->
+      <!-- <converters:FeedbackStateToBrushConverter x:Key="FeedbackBrushConverter"/> -->
+    </UserControl.Resources>
+
+    <DockPanel Margin="10">
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Spacing="20" Margin="10" HorizontalAlignment="Center">
+            <TextBlock Text="{Binding QuestionNumberText}" FontSize="16" VerticalAlignment="Center"/>
+            <ProgressBar Minimum="0" Maximum="{Binding ProgressMax}" Value="{Binding ProgressValue}" Width="250" Height="20" VerticalAlignment="Center" IsIndeterminate="{Binding CurrentQuestion == null}"/>
+            <TextBlock Text="{Binding ScoreText}" FontSize="16" VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <Border DockPanel.Dock="Bottom" MinHeight="30" Padding="5" Margin="5">
+            <TextBlock Text="{Binding FeedbackText}" IsVisible="{Binding IsFeedbackVisible}"
+                       HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontWeight="Bold">
+                <TextBlock.Styles>
+                    <Style Selector="TextBlock.Correct">
+                        <Setter Property="Foreground" Value="DarkGreen"/>
+                    </Style>
+                    <Style Selector="TextBlock.Incorrect">
+                        <Setter Property="Foreground" Value="DarkRed"/>
+                    </Style>
+                    <Style Selector="TextBlock.Neutral">
+                        <Setter Property="Foreground" Value="{DynamicResource TextControlForeground}"/>
+                    </Style>
+                </TextBlock.Styles>
+                <!-- Binding classes directly to the TextBlock for dynamic styling based on FeedbackState -->
+                <Classes.Correct="{Binding FeedbackState, Converter={x:Static ObjectConverters.Equals}, ConverterParameter=Correct}" />
+                <Classes.Incorrect="{Binding FeedbackState, Converter={x:Static ObjectConverters.Equals}, ConverterParameter=Incorrect}" />
+                <Classes.Neutral="{Binding FeedbackState, Converter={x:Static ObjectConverters.Equals}, ConverterParameter=Neutral}" />
+            </TextBlock>
+        </Border>
+
+        <Grid Margin="10" IsEnabled="{Binding AreOptionsEnabled}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/> <!-- For Question Text -->
+                <RowDefinition Height="*"/>    <!-- For Image -->
+                <RowDefinition Height="Auto"/> <!-- For Options -->
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Text="{Binding CurrentQuestion.QuestionText}" MinHeight="40" FontSize="18" TextWrapping="Wrap" HorizontalAlignment="Center" TextAlignment="Center" Margin="0,10"/>
+
+            <Border Grid.Row="1" Margin="10" MinHeight="150" BorderBrush="Gray" BorderThickness="1" CornerRadius="5" VerticalAlignment="Center" HorizontalAlignment="Center">
+                 <Image Source="{Binding CurrentQuestion.ImagePath, Converter={StaticResource BitmapAssetConverter}}"
+                       Stretch="Uniform" MaxHeight="250" MinWidth="200"
+                       IsVisible="{Binding CurrentQuestion.ImagePath, Converter={StaticResource IsNotNullOrEmptyConverter}}"/>
+            </Border
+
+            <ItemsControl Grid.Row="2" ItemsSource="{Binding AnswerOptions}" HorizontalAlignment="Center" Margin="0,15,0,0">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal" ItemWidth="300" ItemHeight="70" HorizontalAlignment="Center"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Content="{Binding}"
+                                Command="{Binding $parent[ItemsControl].DataContext.SubmitAnswerCommand}"
+                                CommandParameter="{Binding}"
+                                MinWidth="280" MinHeight="60" Margin="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Classes="accent"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Grid>
+    </DockPanel>
+</UserControl>

@@ -1,0 +1,39 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:GeographyQuizAvalonia.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="500"
+             x:Class="GeographyQuizAvalonia.Views.MainView"
+             x:DataType="vm:MainViewModel">
+
+    <Design.DataContext>
+        <!-- This DataContext is used by the Avalonia XAML Designer primarily -->
+        <!-- For this to work well, ensure MainViewModel has a parameterless constructor or dependencies can be resolved by designer -->
+        <vm:MainViewModel />
+    </Design.DataContext>
+
+    <StackPanel Spacing="10" Margin="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <TextBlock Text="Geography Quiz Setup" FontSize="24" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+
+        <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto,Auto" MaxWidth="500">
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Enter Your Name:" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding PlayerName}" Watermark="Player Name" Margin="5"/>
+
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Select Quiz Mode:" VerticalAlignment="Center" Margin="0,10,0,0"/>
+            <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding QuizTypes}" SelectedItem="{Binding SelectedQuizType}" Margin="5"/>
+
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Filter by Continent:" VerticalAlignment="Center" Margin="0,10,0,0"/>
+            <ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Continents}" SelectedItem="{Binding SelectedContinent}" Margin="5"/>
+
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Number of Questions:" VerticalAlignment="Center" Margin="0,10,0,0"/>
+            <NumericUpDown Grid.Row="3" Grid.Column="1" Value="{Binding NumberOfQuestions}" Minimum="5" Maximum="20" FormatString="N0" Margin="5"/>
+        </Grid>
+
+        <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Center" Margin="0,20,0,0">
+            <Button Content="Start Quiz" Command="{Binding StartQuizCommand}" IsEnabled="{Binding CanStartQuiz}" MinWidth="120" Classes="accent"/>
+            <Button Content="View High Scores" Command="{Binding ViewHighScoresCommand}" MinWidth="120"/>
+            <Button Content="Start from Config" Command="{Binding StartFromConfigCommand}" IsEnabled="{Binding IsStartFromConfigEnabled}" MinWidth="120"/>
+        </StackPanel>
+    </StackPanel>
+</UserControl>

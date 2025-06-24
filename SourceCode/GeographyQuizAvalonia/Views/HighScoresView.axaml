@@ -1,0 +1,43 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:GeographyQuizAvalonia.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="650" d:DesignHeight="450"
+             x:Class="GeographyQuizAvalonia.Views.HighScoresView"
+             x:DataType="vm:HighScoresViewModel">
+
+    <Design.DataContext>
+        <!-- This DataContext is used by the Avalonia XAML Designer primarily -->
+        <!-- Ensure HighScoresViewModel has a parameterless constructor or its dependencies can be resolved by the designer -->
+        <vm:HighScoresViewModel />
+    </Design.DataContext>
+
+    <DockPanel Margin="15">
+        <TextBlock DockPanel.Dock="Top" Text="High Scores" FontSize="24" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Spacing="20" Margin="0,0,0,15" HorizontalAlignment="Center">
+            <RadioButton Content="All Players" IsChecked="{Binding ShowAllPlayers}" GroupName="ScoreFilter" Classes="accent"/>
+            <RadioButton Content="My Scores" IsChecked="{Binding ShowMyScores}" IsEnabled="{Binding CanShowMyScores}" GroupName="ScoreFilter" Classes="accent"/>
+        </StackPanel>
+
+        <Button DockPanel.Dock="Bottom" Content="Close" Command="{Binding CloseCommand}" HorizontalAlignment="Center" MinWidth="120" Margin="0,20,0,0" Classes="accent"/>
+
+        <DataGrid ItemsSource="{Binding HighScores}"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  CanUserSortColumns="True"
+                  CanUserResizeColumns="True"
+                  GridLinesVisibility="All"
+                  BorderThickness="1" BorderBrush="Gray"
+                  Margin="0,5,0,0" MaxHeight="300">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Player Name" Binding="{Binding PlayerName}" Width="*" MinWidth="150"/>
+                <DataGridTextColumn Header="Score" Binding="{Binding Score}" Width="Auto" MinWidth="70"/>
+                <DataGridTextColumn Header="Date" Binding="{Binding QuizTimestamp, StringFormat='yyyy-MM-dd HH:mm'}" Width="Auto" MinWidth="130"/>
+                <DataGridTextColumn Header="Quiz Type" Binding="{Binding QuizType}" Width="*" MinWidth="150"/>
+                <DataGridTextColumn Header="Questions" Binding="{Binding TotalQuestions}" Width="Auto" MinWidth="80"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
+</UserControl>
