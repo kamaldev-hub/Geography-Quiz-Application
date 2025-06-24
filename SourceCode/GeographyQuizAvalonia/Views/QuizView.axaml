@@ -37,11 +37,12 @@
                     <Setter Property="Foreground" Value="{DynamicResource TextControlForeground}"/>
                 </Style>
             </TextBlock.Styles>
-            <TextBlock.Classes>
-                 <MultiBinding Converter="{x:Static StringConverters. 우선순위}"> <!-- Placeholder for a state-to-class converter -->
-                    <Binding Path="FeedbackState"/>
-                 </MultiBinding>
-            </TextBlock.Classes>
+            <!-- Placeholder for dynamic classes based on FeedbackState was here -->
+            <!-- <TextBlock.Classes> -->
+                 <!-- <MultiBinding Converter="{x:Static StringConverters.우선순위}"> -->
+                    <!-- <Binding Path="FeedbackState"/> -->
+                 <!-- </MultiBinding> -->
+            <!-- </TextBlock.Classes> -->
         </TextBlock>
 
 
