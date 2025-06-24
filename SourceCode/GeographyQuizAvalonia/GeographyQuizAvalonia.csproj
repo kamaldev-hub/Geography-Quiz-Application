@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings> <!-- Be explicit for clarity in this generated project -->
+    <RootNamespace>GeographyQuizAvalonia</RootNamespace>
+    <AssemblyName>GeographyQuizAvalonia</AssemblyName>
+    <LangVersion>10.0</LangVersion> <!-- Enable C# 10 features -->
+    <!-- Avalonia uses platform-specific executables by default -->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="11.0.10" /> <!-- Use a recent stable version -->
+    <PackageReference Include="Avalonia.Desktop" Version="11.0.10" />
+    <!-- Theme -->
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.10" />
+    <!-- MVVM Framework - ReactiveUI is common with Avalonia -->
+    <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.10" />
+    <!-- For XAML Compilation -->
+    <PackageReference Include="Avalonia.Diagnostics" Version="11.0.10" Condition="'$(Configuration)' == 'Debug'" />
+    <PackageReference Include="XamlNameReferenceGenerator" Version="1.6.1" /> <!-- Helps with x:Name references -->
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="quiz.ini">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\**\*" />
+  </ItemGroup>
+
+</Project>

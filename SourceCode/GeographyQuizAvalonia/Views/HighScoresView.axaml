@@ -1,0 +1,34 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:GeographyQuizAvalonia.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="400"
+             x:Class="GeographyQuizAvalonia.Views.HighScoresView"
+             x:DataType="vm:HighScoresViewModel">
+
+    <Design.DataContext>
+        <vm:HighScoresViewModel />
+    </Design.DataContext>
+
+    <DockPanel Margin="15">
+        <TextBlock DockPanel.Dock="Top" Text="High Scores" FontSize="24" HorizontalAlignment="Center" Margin="0,0,0,15"/>
+
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Spacing="15" Margin="0,0,0,10">
+            <RadioButton Content="All Players" IsChecked="{Binding ShowAllPlayers}" GroupName="ScoreFilter"/>
+            <RadioButton Content="My Scores" IsChecked="{Binding ShowMyScores}" IsEnabled="{Binding CanShowMyScores}" GroupName="ScoreFilter"/>
+        </StackPanel>
+
+        <Button DockPanel.Dock="Bottom" Content="Close" Command="{Binding CloseCommand}" HorizontalAlignment="Center" MinWidth="100" Margin="0,15,0,0"/>
+
+        <DataGrid ItemsSource="{Binding HighScores}" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="True" Margin="0,5,0,0">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Player Name" Binding="{Binding PlayerName}" Width="*"/>
+                <DataGridTextColumn Header="Score" Binding="{Binding Score}" Width="Auto"/>
+                <DataGridTextColumn Header="Date" Binding="{Binding QuizTimestamp, StringFormat='yyyy-MM-dd HH:mm'}" Width="Auto"/>
+                <DataGridTextColumn Header="Quiz Type" Binding="{Binding QuizType}" Width="*"/>
+                <DataGridTextColumn Header="Questions" Binding="{Binding TotalQuestions}" Width="Auto"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
+</UserControl>

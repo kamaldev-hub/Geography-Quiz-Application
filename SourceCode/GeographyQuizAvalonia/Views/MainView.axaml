@@ -1,0 +1,35 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:GeographyQuizAvalonia.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="500"
+             x:Class="GeographyQuizAvalonia.Views.MainView"
+             x:DataType="vm:MainViewModel">
+
+    <Design.DataContext>
+        <vm:MainViewModel />
+    </Design.DataContext>
+
+    <StackPanel Spacing="10" Margin="20">
+        <TextBlock Text="Geography Quiz Setup" FontSize="24" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+
+        <TextBlock Text="Enter Your Name:"/>
+        <TextBox Text="{Binding PlayerName}" Watermark="Player Name"/>
+
+        <TextBlock Text="Select Quiz Mode:" Margin="0,10,0,0"/>
+        <ComboBox ItemsSource="{Binding QuizTypes}" SelectedItem="{Binding SelectedQuizType}"/>
+
+        <TextBlock Text="Filter by Continent (Optional):" Margin="0,10,0,0"/>
+        <ComboBox ItemsSource="{Binding Continents}" SelectedItem="{Binding SelectedContinent}"/>
+
+        <TextBlock Text="Number of Questions:" Margin="0,10,0,0"/>
+        <NumericUpDown Value="{Binding NumberOfQuestions}" Minimum="5" Maximum="20" FormatString="N0"/>
+
+        <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Center" Margin="0,20,0,0">
+            <Button Content="Start Quiz" Command="{Binding StartQuizCommand}" IsEnabled="{Binding StartQuizCommand.CanExecute}" MinWidth="120"/>
+            <Button Content="View High Scores" Command="{Binding ViewHighScoresCommand}" MinWidth="120"/>
+            <Button Content="Start from Config" Command="{Binding StartFromConfigCommand}" IsEnabled="{Binding IsStartFromConfigEnabled}" MinWidth="120"/>
+        </StackPanel>
+    </StackPanel>
+</UserControl>
