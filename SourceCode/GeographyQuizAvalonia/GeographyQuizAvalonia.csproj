@@ -3,50 +3,97 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
-    <ImplicitUsings>disable</ImplicitUsings> <!-- Be explicit for clarity in this generated project -->
+    <ImplicitUsings>disable</ImplicitUsings>
     <RootNamespace>GeographyQuizAvalonia</RootNamespace>
     <AssemblyName>GeographyQuizAvalonia</AssemblyName>
-    <LangVersion>12.0</LangVersion> <!-- Enable C# 12 features -->
-    <!-- Avalonia uses platform-specific executables by default -->
+    <LangVersion>12.0</LangVersion>
+    <!-- Disable default item includes for this diagnostic phase -->
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <EnableDefaultAvaloniaXamlItems>false</EnableDefaultAvaloniaXamlItems>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="11.0.10" /> <!-- Use a recent stable version -->
+    <PackageReference Include="Avalonia" Version="11.0.10" />
     <PackageReference Include="Avalonia.Desktop" Version="11.0.10" />
-    <!-- Theme -->
-    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.10" />
-    <!-- MVVM Framework - ReactiveUI is common with Avalonia -->
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.10" /> <!-- Keep for now, might remove if error persists -->
     <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.10" />
-    <!-- For XAML Compilation -->
     <PackageReference Include="Avalonia.Diagnostics" Version="11.0.10" Condition="'$(Configuration)' == 'Debug'" />
-    <PackageReference Include="XamlNameReferenceGenerator" Version="1.6.1" /> <!-- Helps with x:Name references -->
+    <PackageReference Include="XamlNameReferenceGenerator" Version="1.6.1" />
   </ItemGroup>
 
+  <!-- Explicitly include only necessary files for this minimal test -->
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="App.axaml.cs">
+      <DependentUpon>App.axaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="Views\MainWindow.axaml.cs">
+      <DependentUpon>MainWindow.axaml</DependentUpon>
+    </Compile>
+    <!-- Add ViewLocator.cs as App.axaml (when restored) will use it -->
+    <Compile Include="ViewLocator.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="Views\MainView.axaml.cs">
+      <DependentUpon>MainView.axaml</DependentUpon>
+    </Compile>
+    <!-- Include necessary service/model files that MainViewModel might use -->
+    <!-- For simplicity in this diagnostic step, assuming MainViewModel is relatively self-contained or its dependencies are already included -->
+    <!-- If MainViewModel uses e.g. PlayerRepository, that .cs file would need to be in a <Compile Include> too -->
+    <Compile Include="Services\PlayerRepository.cs" /> <!-- MainViewModel uses this -->
+    <Compile Include="Services\QuizManagerService.cs" /> <!-- MainViewModel uses this -->
+    <Compile Include="Services\IniConfigParser.cs" /> <!-- MainViewModel uses this -->
+    <Compile Include="Services\DatabaseConnector.cs" /> <!-- Dependency for Repositories -->
+    <Compile Include="Services\CountryRepository.cs" /> <!-- Dependency for QuizManagerService -->
+    <Compile Include="Services\QuizSessionRepository.cs" /> <!-- Dependency for QuizManagerService -->
+    <Compile Include="Services\QuizTypeEnum.cs" /> <!-- Dependency for QuizManagerService -->
+    <Compile Include="Models\Player.cs" /> <!-- Dependency for PlayerRepository & ViewModels -->
+    <Compile Include="Models\Country.cs" /> <!-- Dependency for CountryRepository & ViewModels -->
+    <Compile Include="Models\QuizSession.cs" /> <!-- Dependency for QuizSessionRepository & ViewModels -->
+    <Compile Include="Models\Question.cs" /> <!-- Dependency for QuizManagerService & ViewModels -->
+    <Compile Include="ViewModels\QuizViewModel.cs" />
+    <Compile Include="Views\QuizView.axaml.cs">
+      <DependentUpon>QuizView.axaml</DependentUpon>
+    </Compile>
+    <!-- Converters are not strictly needed for ultra-minimal QuizView.axaml yet -->
+    <!-- <Compile Include="Converters\BitmapAssetValueConverter.cs" /> -->
+    <!-- <Compile Include="Converters\CommonValueConverters.cs" /> -->
+    <Compile Include="ViewModels\HighScoresViewModel.cs" />
+    <Compile Include="Views\HighScoresView.axaml.cs">
+      <DependentUpon>HighScoresView.axaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <AvaloniaXaml Include="App.axaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </AvaloniaXaml>
+    <AvaloniaXaml Include="Views\MainWindow.axaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </AvaloniaXaml>
+    <AvaloniaXaml Include="Views\MainView.axaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </AvaloniaXaml>
+    <AvaloniaXaml Include="Views\QuizView.axaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </AvaloniaXaml>
+    <AvaloniaXaml Include="Views\HighScoresView.axaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </AvaloniaXaml>
+  </ItemGroup>
+
+  <!-- Keep Assets and quiz.ini as they are unlikely to cause XAML parsing errors -->
   <ItemGroup>
     <Content Include="quiz.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <AvaloniaResource Include="Assets\**\*" />
-  </ItemGroup>
-
-  <!-- Temporarily exclude other XAML views and most ViewModels for diagnostics -->
-  <ItemGroup>
-    <!-- <Compile Remove="ViewModels\MainViewModel.cs" /> -->
-    <!-- <Compile Remove="ViewModels\QuizViewModel.cs" /> --> <!-- Restore QuizViewModel.cs -->
-    <!-- <Compile Remove="ViewModels\HighScoresViewModel.cs" /> -->
-    <!-- Keep ViewModelBase.cs -->
-    <!-- Keep MainWindowViewModel.cs -->
-
-    <!-- <AvaloniaXaml Remove="Views\MainView.axaml" /> -->
-    <!-- <Compile Remove="Views\MainView.axaml.cs" /> -->
-    <!-- <AvaloniaXaml Remove="Views\QuizView.axaml" /> --> <!-- Restore QuizView.axaml -->
-    <!-- <Compile Remove="Views\QuizView.axaml.cs" /> --> <!-- Restore QuizView.axaml.cs -->
-    <!-- <AvaloniaXaml Remove="Views\HighScoresView.axaml" /> -->
-    <!-- <Compile Remove="Views\HighScoresView.axaml.cs" /> -->
-    <!-- MainWindow.axaml and .cs are already restored (processed by default) -->
   </ItemGroup>
 
 </Project>

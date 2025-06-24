@@ -3,7 +3,7 @@
              xmlns:local="using:GeographyQuizAvalonia"
              x:Class="GeographyQuizAvalonia.App"
              RequestedThemeVariant="Default">
-    <!-- Base App.axaml structure -->
+    <!-- Step 7c: Added ViewLocator -->
     <Application.DataTemplates>
         <local:ViewLocator/>
     </Application.DataTemplates>
