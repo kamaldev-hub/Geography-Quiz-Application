@@ -49,7 +49,7 @@
             </TextBlock>
         </Border>
 
-        <Grid Margin="10" IsEnabled="{Binding AreOptionsEnabled}">
+        <Grid Margin="10" IsEnabled="{Binding AreOptionsEnabled}"> <!-- Re-typed/validated spacing -->
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/> <!-- For Question Text -->
                 <RowDefinition Height="*"/>    <!-- For Image -->
