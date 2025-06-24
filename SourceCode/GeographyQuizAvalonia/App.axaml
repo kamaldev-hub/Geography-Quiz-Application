@@ -3,14 +3,12 @@
              xmlns:local="using:GeographyQuizAvalonia"
              x:Class="GeographyQuizAvalonia.App"
              RequestedThemeVariant="Default">
-
+    <!-- Base App.axaml structure -->
     <Application.DataTemplates>
         <local:ViewLocator/>
     </Application.DataTemplates>
 
     <Application.Styles>
         <FluentTheme />
-        <!-- Other global styles or resource dictionaries can be added here -->
-        <!-- Example: <StyleInclude Source="/Styles/GlobalStyles.axaml" /> -->
     </Application.Styles>
 </Application>

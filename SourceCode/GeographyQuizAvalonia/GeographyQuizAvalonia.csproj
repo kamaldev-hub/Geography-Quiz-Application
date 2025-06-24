@@ -32,4 +32,21 @@
     <AvaloniaResource Include="Assets\**\*" />
   </ItemGroup>
 
+  <!-- Temporarily exclude other XAML views and most ViewModels for diagnostics -->
+  <ItemGroup>
+    <!-- <Compile Remove="ViewModels\MainViewModel.cs" /> -->
+    <!-- <Compile Remove="ViewModels\QuizViewModel.cs" /> --> <!-- Restore QuizViewModel.cs -->
+    <!-- <Compile Remove="ViewModels\HighScoresViewModel.cs" /> -->
+    <!-- Keep ViewModelBase.cs -->
+    <!-- Keep MainWindowViewModel.cs -->
+
+    <!-- <AvaloniaXaml Remove="Views\MainView.axaml" /> -->
+    <!-- <Compile Remove="Views\MainView.axaml.cs" /> -->
+    <!-- <AvaloniaXaml Remove="Views\QuizView.axaml" /> --> <!-- Restore QuizView.axaml -->
+    <!-- <Compile Remove="Views\QuizView.axaml.cs" /> --> <!-- Restore QuizView.axaml.cs -->
+    <!-- <AvaloniaXaml Remove="Views\HighScoresView.axaml" /> -->
+    <!-- <Compile Remove="Views\HighScoresView.axaml.cs" /> -->
+    <!-- MainWindow.axaml and .cs are already restored (processed by default) -->
+  </ItemGroup>
+
 </Project>

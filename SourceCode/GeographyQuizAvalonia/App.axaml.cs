@@ -17,10 +17,12 @@ namespace GeographyQuizAvalonia
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
+                // Restore MainWindow creation
                 desktop.MainWindow = new MainWindow
                 {
                     DataContext = new MainWindowViewModel(),
                 };
+                // Console.WriteLine("App.axaml.cs: MainWindow creation temporarily disabled for diagnostics.");
             }
             // else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
             // {
