@@ -62,7 +62,7 @@
                  <Image Source="{Binding CurrentQuestion.ImagePath, Converter={StaticResource BitmapAssetConverter}}"
                        Stretch="Uniform" MaxHeight="250" MinWidth="200"
                        IsVisible="{Binding CurrentQuestion.ImagePath, Converter={StaticResource IsNotNullOrEmptyConverter}}"/>
-            </Border
+            </Border>
 
             <ItemsControl Grid.Row="2" ItemsSource="{Binding AnswerOptions}" HorizontalAlignment="Center" Margin="0,15,0,0">
                 <ItemsControl.ItemsPanel>
