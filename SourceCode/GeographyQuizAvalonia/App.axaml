@@ -3,11 +3,9 @@
              xmlns:local="using:GeographyQuizAvalonia"
              x:Class="GeographyQuizAvalonia.App"
              RequestedThemeVariant="Default">
-    <!-- Step 7c: Added ViewLocator -->
     <Application.DataTemplates>
         <local:ViewLocator/>
     </Application.DataTemplates>
-
     <Application.Styles>
         <FluentTheme />
     </Application.Styles>
